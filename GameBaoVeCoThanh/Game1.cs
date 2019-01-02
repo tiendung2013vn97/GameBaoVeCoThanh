@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Reflection;
 
 namespace GameBaoVeCoThanh
 {
@@ -11,6 +12,8 @@ namespace GameBaoVeCoThanh
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Menu menu;
 
         public Game1()
         {
@@ -27,6 +30,7 @@ namespace GameBaoVeCoThanh
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -41,6 +45,14 @@ namespace GameBaoVeCoThanh
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            GameControl.sb = spriteBatch;
+            GameControl.g = this;
+
+            menu = new Menu(new Rectangle(0, 0, this.graphics.PreferredBackBufferWidth, this.graphics.PreferredBackBufferHeight));
+            menu.LoadContent();
+
+            // Load game
+            GameInfo.loadFile("gameInfo.txt");
         }
 
         /// <summary>
@@ -50,6 +62,10 @@ namespace GameBaoVeCoThanh
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            menu.UnloadContent();
+
+            // Save game
+            GameInfo.saveFile("gameInfo.txt");
         }
 
         /// <summary>
@@ -63,6 +79,9 @@ namespace GameBaoVeCoThanh
                 Exit();
 
             // TODO: Add your update logic here
+            GameControl.gt = gameTime;
+
+            menu.Update();
 
             base.Update(gameTime);
         }
@@ -76,6 +95,11 @@ namespace GameBaoVeCoThanh
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            menu.Draw();
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
