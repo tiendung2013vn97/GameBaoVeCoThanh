@@ -44,6 +44,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="GameInfo.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="Program.cs" />

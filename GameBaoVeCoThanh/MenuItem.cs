@@ -20,7 +20,7 @@ namespace GameBaoVeCoThanh
         public event ClickHandler Click;
         bool isClicked = false;
 
-        public string Name { get => name; set => name = value; }
+        public string Name { get; set; }
 
         public MenuItem(string name, Rectangle rectangle)
         {
