@@ -13,25 +13,29 @@ namespace GameBaoVeCoThanh
     {
         List<Texture2D> imgs = new List<Texture2D>(); // 3 img for normal, click, hover
         int imgIndex = 0; // 0: normal, 1: click, 2: hover
-        string name; // newgame, exitgame, continue
+        string state; // newgame, exitgame, continue
+        string name = ""; // nội dung của menuItem
+        string[] imgsPath;
         float left, top, width, height;
 
         public delegate void ClickHandler(object sender, EventArgs e);
         public event ClickHandler Click;
         bool isClicked = false;
 
-        public string Name { get; set; }
+        public string State { get => this.state; set => this.state = value; }
 
-        public MenuItem(string name, Rectangle rectangle)
+        public MenuItem(string name, Rectangle rectangle, string state, string[] imgsPath)
         {
             this.name = name;
             this.left = rectangle.Left;
             this.top = rectangle.Top;
             this.width = rectangle.Width;
             this.height = rectangle.Height;
+            this.state = state;
+            this.imgsPath = imgsPath;
         }
 
-        public void LoadContent(string[] imgsPath) // [0]: imgPath normal, [1]: imgPath click, [2]: imgPath hover
+        public void LoadContent() // [0]: imgPath normal, [1]: imgPath click, [2]: imgPath hover
         {
             for (int i = 0; i < imgsPath.Length; i++)
             {

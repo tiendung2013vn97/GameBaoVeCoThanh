@@ -9,7 +9,7 @@ namespace GameBaoVeCoThanh
 {
     class Menu
     {
-        List<MenuItem> menuItems = new List<MenuItem>();
+        List<MenuItem> list = new List<MenuItem>();
         float left, top, width, height;
 
         public Menu(Rectangle rectangle)
@@ -22,48 +22,65 @@ namespace GameBaoVeCoThanh
 
         public void LoadContent()
         {
-            var menuItem = new MenuItem("newgame", new Rectangle(0, 0, 100, 100));
-            menuItem.LoadContent(new string[] { "Play", "Play_Click", "Play_Hover" });
-            menuItem.Click += menuItemClick;
-            menuItems.Add(menuItem);
+            createMenuItem("", new Rectangle(0, 0, 100, 100), "newgame", new string[] { "Play", "Play_Click", "Play_Hover" });
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].LoadContent();
+            }
         }
 
         public void UnloadContent()
         {
-            for (int i = 0; i < menuItems.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                menuItems[i].UnloadContent();
+                list[i].UnloadContent();
             }
         }
 
         public void Update()
         {
-            for (int i = 0; i < menuItems.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                menuItems[i].Update();
+                list[i].Update();
             }
         }
 
         public void Draw()
         {
-            for (int i = 0; i < menuItems.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                menuItems[i].Draw();
+                list[i].Draw();
             }
         }
 
-        public void menuItemClick(object sender, EventArgs e)
+        public void createMenuItem(string name, Rectangle rectangle, string state, string[] imgsPath) // name là nội dung của menuItem
+        {
+            MenuItem menuItem = new MenuItem(name, rectangle, state, imgsPath);
+            menuItem.Click += handleCLick;
+            list.Add(menuItem);
+        }
+
+        //Sau khi click, kiểm tra nếu là newgame thì bắt đầu game từ level 1
+        public void handleCLick(object sender, EventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
             if (menuItem != null)
             {
-                if (menuItem.Name.Equals("newgame"))
+                if (menuItem.State.Equals("newgame"))
                 {
                     // Xử lý new game
-                    int a = 1;
                 }
 
-                // ...
+                if (menuItem.State.Equals("continue"))
+                {
+                    // Xử lý continue
+                }
+
+                if (menuItem.State.Equals("exitgame"))
+                {
+                    // Xử lý exitgame
+                }
             }
         }
     }
