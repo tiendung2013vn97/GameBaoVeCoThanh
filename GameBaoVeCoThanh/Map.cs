@@ -12,6 +12,6 @@ namespace GameBaoVeCoThanh
         public int CellNumberInCollumn { get; set; }
         public int[,] ArrayMap { get; set; }
 //        public void Destroy
-        void 
+        //void 
     }
 }

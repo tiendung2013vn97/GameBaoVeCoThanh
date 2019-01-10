@@ -31,6 +31,7 @@ namespace GameBaoVeCoThanh
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            // this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -48,13 +49,14 @@ namespace GameBaoVeCoThanh
             GameControl.sb = spriteBatch;
             GameControl.g = this;
 
-            menu = new Menu(new Rectangle(0, 0, this.graphics.PreferredBackBufferWidth, this.graphics.PreferredBackBufferHeight));
-            menu.LoadContent();
-
             // Load game
             GameInfo.loadFile("gameInfo.txt");
 
-            test = this.Content.Load<Texture2D>("tuong/tuongKienCo");
+            // Menu
+            menu = new Menu(new Rectangle(0, 0, this.graphics.PreferredBackBufferWidth, this.graphics.PreferredBackBufferHeight));
+            menu.LoadContent();
+
+            // test = this.Content.Load<Texture2D>("tuong/tuongKienCo");
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace GameBaoVeCoThanh
             // TODO: Add your update logic here
             GameControl.gt = gameTime;
 
-            //menu.Update();
+            menu.Update();
 
             base.Update(gameTime);
         }
@@ -99,7 +101,7 @@ namespace GameBaoVeCoThanh
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            //menu.Draw();
+            menu.Draw();
 
             spriteBatch.End();
 

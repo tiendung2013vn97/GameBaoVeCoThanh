@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dialog.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="GameInfo.cs" />
