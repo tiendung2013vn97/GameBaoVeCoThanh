@@ -15,7 +15,6 @@ namespace GameBaoVeCoThanh
         Texture2D test;
         Menu menu;
 
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -31,7 +30,10 @@ namespace GameBaoVeCoThanh
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            // this.IsMouseVisible = true;
+            //this.graphics.PreferredBackBufferWidth = 1200;
+            //this.graphics.PreferredBackBufferHeight = 700;
+            //this.graphics.ApplyChanges();
+            this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -53,7 +55,7 @@ namespace GameBaoVeCoThanh
             GameInfo.loadFile("gameInfo.txt");
 
             // Menu
-            menu = new Menu(new Rectangle(0, 0, this.graphics.PreferredBackBufferWidth, this.graphics.PreferredBackBufferHeight));
+            menu = new Menu(new Rectangle(0, 0, this.graphics.PreferredBackBufferWidth, this.graphics.PreferredBackBufferHeight), true);
             menu.LoadContent();
 
             // test = this.Content.Load<Texture2D>("tuong/tuongKienCo");
@@ -85,7 +87,7 @@ namespace GameBaoVeCoThanh
             // TODO: Add your update logic here
             GameControl.gt = gameTime;
 
-            menu.Update();
+            if (menu.Visible == true) menu.Update();
 
             base.Update(gameTime);
         }
@@ -101,7 +103,7 @@ namespace GameBaoVeCoThanh
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            menu.Draw();
+            if (menu.Visible == true) menu.Draw();
 
             spriteBatch.End();
 

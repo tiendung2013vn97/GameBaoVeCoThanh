@@ -13,30 +13,37 @@ namespace GameBaoVeCoThanh
     {
         List<Texture2D> imgs = new List<Texture2D>(); // 3 img for normal, click, hover
         int imgIndex = 0; // 0: normal, 1: click, 2: hover
-        string state; // newgame, exitgame, continue
+        string content; // newgame, exit, continue
         string name = ""; // nội dung của menuItem
         string[] imgsPath;
         float left, top, width, height;
+        SpriteFont font;
+        Color fontColor = Color.White;
+        bool visible = false;
 
         public delegate void ClickHandler(object sender, EventArgs e);
         public event ClickHandler Click;
         bool isClicked = false;
 
-        public string State { get => this.state; set => this.state = value; }
+        public string Name { get => this.name; set => this.name = value; }
+        public bool Visible { get => this.visible; set => this.visible = value; }
 
-        public MenuItem(string name, Rectangle rectangle, string state, string[] imgsPath)
+        public MenuItem(string name, Rectangle rectangle, string content, string[] imgsPath, bool visible)
         {
             this.name = name;
             this.left = rectangle.Left;
             this.top = rectangle.Top;
             this.width = rectangle.Width;
             this.height = rectangle.Height;
-            this.state = state;
+            this.content = content;
             this.imgsPath = imgsPath;
+            this.visible = visible;
         }
 
         public void LoadContent() // [0]: imgPath normal, [1]: imgPath click, [2]: imgPath hover
         {
+            font = GameControl.g.Content.Load<SpriteFont>("font/title");
+
             for (int i = 0; i < imgsPath.Length; i++)
             {
                 var img = GameControl.g.Content.Load<Texture2D>(imgsPath[i]);
@@ -51,18 +58,26 @@ namespace GameBaoVeCoThanh
 
         public void Update()
         {
-            imgIndex = 0;
+            if (this.visible)
+            {
+                fontColor = Color.White;
+                imgIndex = 0;
 
-            this.HoverListener();
-            this.ClickListener();
+                this.HoverListener();
+                this.ClickListener();
 
-            if (isClicked) imgIndex = 1;
+                if (isClicked) imgIndex = 1;
+            }
         }
 
         public void Draw()
         {
-            GameControl.sb.Draw(imgs[imgIndex],
-                new Rectangle((int)this.left, (int)this.top, (int)this.width, (int)this.height), Color.White);
+            if (this.visible)
+            {
+                GameControl.sb.Draw(imgs[imgIndex],
+                    new Rectangle((int)this.left, (int)this.top, (int)this.width, (int)this.height), Color.White);
+                GameControl.sb.DrawString(font, content, new Vector2(left + width / 4, top + height / 4), fontColor);
+            }
         }
 
         private void ClickListener()
@@ -90,6 +105,7 @@ namespace GameBaoVeCoThanh
 
             if (this.IsSelected(ms))
             {
+                fontColor = Color.Yellow;
                 imgIndex = 2;
             }
         }
